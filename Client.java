@@ -1,4 +1,5 @@
 //Test
+//Ton code est de la marde
 import java.io.DataInputStream; import 
 java.net.Socket; // Application client public
 class Client { private static Socket socket;
