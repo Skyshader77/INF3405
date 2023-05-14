@@ -1,3 +1,9 @@
+/**
+ * @summary The purpose of this class is to define the Server class
+ * @author Alexandre Nguyen & Louis-Phlippe
+ * @version 1 Last modified on 14/05/2023
+ */ 
+
 import java.net.InetAddress; 
 import java.net.InetSocketAddress; 
 import java.net.ServerSocket; 
