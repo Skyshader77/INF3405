@@ -1,4 +1,7 @@
-import java.io.DataOutputStream;
+import java.io. PrintWriter;
+import java.io.DataInputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -12,7 +15,21 @@ public class ClientHandler extends Thread{
 	public void run() {   
 		// Création de thread qui envoi un message à un client 
 		try {
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream()); 
+			PrintWriter out = new  PrintWriter(socket.getOutputStream(),true); 
+			BufferedReader bufferedIn= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			String inputLine, outputLine;
+			 // Initiate conversation with client
+		    PassWordAuthentificationProtocol Pap = new PassWordAuthentificationProtocol();
+		    outputLine = Pap.processInput(null);
+		    out.println(outputLine);
+			
+		    while ((inputLine = bufferedIn.readLine()) != null) {
+		        outputLine = Pap.processInput(inputLine);
+		        out.println(outputLine);
+		        if (outputLine.equals("Bye."))
+		            break;
+		    }   
+		    
 		// création de canal d’envoi out.writeUTF("Hello from server - you are client#" + clientNumber); 
 		// envoi de message
 		} catch (IOException e) {
