@@ -1,6 +1,5 @@
-import java.io.DataInputStream; 
-import java.io.DataOutputStream; 
-import java.net.Socket; // Application client public
+import java.io.*;
+import java.net.*;
 import java.util.Arrays;
 import java.util.Scanner;  // Import the Scanner class
 class Client { private static Socket socket;
@@ -24,17 +23,39 @@ class Client { private static Socket socket;
 		    if (ipValid=false) {
 		    	throw new IllegalArgumentException("Error:  Invalid IP address");
 		    }
-		    System.out.println("Enter username");
-		    String userID = sc.nextLine(); 
-		    System.out.println("Enter password");
-		    String userPassword = sc.nextLine(); 
 		    
 		 // Création d'une nouvelle connexion aves le serveur 
-			socket = new Socket(serverAddress, portID);
-			System.out.format("Serveur lancé sur [%s:%d]", serverAddress, portID);
-	// Céatien d'un canal entrant pour recevoir les messages envoyés, par le serveur
-			DataInputStream in = new DataInputStream(socket.getInputStream());
-			
+		    try {
+				socket = new Socket(serverAddress, portID);
+				System.out.format("Serveur lancé sur [%s:%d]", serverAddress, portID);
+		// Creation d'un canal entrant pour recevoir les messages envoyés, par le serveur
+			    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			 // Creation of input and output readers   
+			    BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+			    BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+			    String fromServer;
+			    String fromUser;
+			    // Defines interaction between server and client 
+				while ((fromServer = in.readLine()) != null) {
+				    System.out.println("Server: " + fromServer);
+				    if (fromServer.equals("Bye."))
+				        break;
+	
+				    fromUser = stdIn.readLine();
+				    if (fromUser != null) {
+				        System.out.println("Client: " + fromUser);
+				        out.println(fromUser);
+				    }
+				}
+		    }
+		    catch (UnknownHostException e) {
+		        System.err.println("Don't know about host " + serverAddress);
+		        System.exit(1);
+		    } catch (IOException e) {
+		        System.err.println("Couldn't get I/O for the connection to " +
+		        		serverAddress);
+		        System.exit(1);
+		    }
 	// Attente de la réception d'un message envoyé par le, server sur le canal
 			//String helloMessageFromServer = in.readUTF();
 			//System.out.println(helloMessageFromServer); 
