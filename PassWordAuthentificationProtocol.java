@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 /**
  * @summary The purpose of this class is to authenticate the user to the server
- * @author Alexandre Nguyen
+ * @author Alexandre Nguyen & Louis-Antoine
  * @version 1.0 Last modified on 13/05/2023
  */ 
 public class PassWordAuthentificationProtocol {
@@ -19,19 +19,36 @@ public class PassWordAuthentificationProtocol {
     private Map<String, String> users = new HashMap<String, String>();
     private String currentPassword="";
     private String currentUser="";
+
+    
     /**
-     * @summary The purpose of this function is to process the user's input and determine if it is a username/password combination
+     * @summary The purpose of this constructor is to grab the password file if it exists and put it in the users map
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 1.0 Last modified on 15/05/2023
+     * 
+     */ 
+    
+    public  PassWordAuthentificationProtocol() {
+    	try {
+    		users= readTxt();
+    	}
+    	catch(IOException e){
+    		users = new HashMap<String, String>();
+    	}
+    }
+    /**
+     * @summary The purpose of this method is to process the user's input and determine if it is a username/password combination
      * @param theInput which is the user's input
      * @return theOutput which is the server's response to the user's input
-     * @author Alexandre Nguyen
-     * @version 1.0 Last modified on 13/05/2023
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 1.0 Last modified on 16/05/2023
      * 
      */ 
     public String processInput(String theInput) {
         String theOutput = null;
  
         if (state == WAITING) {
-        	theOutput ="Enter your username:";
+        	theOutput ="Please enter your username, unsuspecting Canadian user:";
         	state = AUTHENTICATINGUSERNAME;
         }
         else if (state == AUTHENTICATINGUSERNAME) {
@@ -40,19 +57,28 @@ public class PassWordAuthentificationProtocol {
         	if (isUserFOund) {
         		currentPassword=users.get(theInput);
         	}
-        	theOutput ="Enter password:";
+        	theOutput ="Please enter your password, unsuspecting Canadian user:";
             state = AUTHENTICATINGPASSWORD;
         } else if (state ==  AUTHENTICATINGPASSWORD) {
-            if (isUserFOund && theInput==currentPassword) {
-                theOutput = "You have successfully authenticated.";
-                state = AUTHENTICATED;
-            } else if (isUserFOund && theInput!=currentPassword) {
-                theOutput = "Wrong password for this user. Please reenter your password";
-            }
-            else {
+        	//if the user was found in the database
+            if (isUserFOund==false) {
             	users.put(currentUser,theInput);
-            	theOutput = "Welcome user:"+currentUser+"Your password is: "+theInput+ "Press n/N to exit the server.";
-            	state = AUTHENTICATED;
+            	theOutput = "Welcome unsuspecting Canadian user:"+currentUser+"Your password is: "+theInput+ "Press n/N to exit the server.";
+            	try {
+            		writeToTxt();
+            	}
+            	catch(IOException e){
+            		System.out.println("Program failed to write the username/password to a text file.");
+            	}
+            	state = AUTHENTICATED; 
+        	}
+          //if the user has entered the correct password
+            else if (isUserFOund==true && theInput.equals(currentPassword)==true) {
+                theOutput = "Welcome back unsuspecting Canadian user:"+currentUser+". Press n/N to exit the server.";
+                state = AUTHENTICATED;   
+             //if the user has not entered the correct password
+            } else if (isUserFOund==true && theInput.equals(currentPassword)==false) {
+                theOutput = "Wrong password for this unsuspecting Canadian user. Please reenter your password";
             }
         } else if (state ==  AUTHENTICATED) {
         	if (theInput.equalsIgnoreCase("n")) {
@@ -63,24 +89,48 @@ public class PassWordAuthentificationProtocol {
         return theOutput;
     }
     /**
-     * @summary The purpose of this function is to write the username/password combinations to a CSV file
+     * @summary The purpose of this function is to write the username/password combinations to a TXT file
      * @return a Boolean saying if the operation succeeded or not
-     * @author Alexandre Nguyen
-     * @version 1.0 Last modified on 13/05/2023
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 2.0 Last modified on 15/05/2023
      * 
      */ 
     
-    public boolean writeToCSV() {
-    	return true;
+    public void writeToTxt() throws IOException {
+    	BufferedWriter fbiLeak = new BufferedWriter(new FileWriter("FBI_Passwords.txt"));
+    	Iterator<Map.Entry<String, String>> itr = users.entrySet().iterator();
+        
+        while(itr.hasNext())
+        {
+             Map.Entry<String, String> entry = itr.next();
+             fbiLeak.write(entry.getKey() + ":"
+                     + entry.getValue());
+             fbiLeak.newLine();
+        }
+        fbiLeak.close();
     }
     /**
-     * @summary The purpose of this function is to read the username/password combinations from a CSV file
+     * @summary The purpose of this function is to read the username/password combinations from a TXT file
      * @return a Boolean saying if the operation succeeded or not
-     * @author Alexandre Nguyen
-     * @version 1.0 Last modified on 13/05/2023
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 2.0 Last modified on 15/05/2023
      * 
      */ 
-    public boolean readCSV() {
-    	return true;
+    public Map<String, String> readTxt() throws IOException{
+    	String line;
+    	Map<String, String> container = new HashMap<String, String>();
+        BufferedReader reader = new BufferedReader(new FileReader("FBI_Passwords.txt"));
+        while ((line = reader.readLine()) != null)
+        {
+            String[] passwordCombo = line.split(":", 2);
+            if (passwordCombo.length >= 2)
+            {
+                String key = passwordCombo[0];
+                String value = passwordCombo[1];
+                container.put(key, value);
+            } 
+        }
+        reader.close();
+    	return container;
     }
 }
