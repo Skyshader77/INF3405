@@ -134,3 +134,19 @@ public class PassWordAuthentificationProtocol {
     	return container;
     }
 }
+
+//public void WriteBeautifully(theInput) {
+	//TO DO: transform the input into what the teacher wants.
+//}
+
+//public void recordUserInputTXT() throws IOException{
+    	//TO DO: Put beautiful input in text file line by line
+		//We assume Two users do not speak at the same time
+//}
+
+//public String grabLastFifteenLines throws IOException{
+//
+
+//  TO DO: Grab last fifteen lines of text.  If there aren't fifteen lines, just grab any quantity you can find.
+
+//}
