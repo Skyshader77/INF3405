@@ -2,6 +2,11 @@ import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 import java.util.Scanner;  // Import the Scanner class
+/**
+ * @summary The purpose of this class is to define an User class
+ * @author Alexandre Nguyen & Louis-Phlippe
+ * @version 1 Last modified on 17/05/2023
+ */ 
 public class Client { private static Socket socket;
 	public static void main(String[] args) throws Exception {
 // Adresse et port du serveur 
