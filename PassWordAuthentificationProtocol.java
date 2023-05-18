@@ -85,6 +85,8 @@ public class PassWordAuthentificationProtocol {
 	        	theOutput = "Bye.";
 	        	state = EXIT;
         	}
+		//Temporary line to stop program from crashing due to blank output
+		theOutput = "Test";
         }
         return theOutput;
     }
