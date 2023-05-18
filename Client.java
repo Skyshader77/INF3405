@@ -32,7 +32,7 @@ public class Client { private static Socket socket;
 		 // Création d'une nouvelle connexion aves le serveur 
 		    try {
 				socket = new Socket(serverAddress, portID);
-				System.out.format("Serveur lancé sur [%s:%d]", serverAddress, portID);
+				System.out.format("Connexion launched to server [%s:%d]", serverAddress, portID);
 		// Creation d'un canal entrant pour recevoir les messages envoyés, par le serveur
 			    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			 // Creation of input and output readers   
