@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 import java.util.Scanner;  // Import the Scanner class
-class Client { private static Socket socket;
+public class Client { private static Socket socket;
 	public static void main(String[] args) throws Exception {
 // Adresse et port du serveur 
 			Scanner sc = new Scanner(System.in);  // Create a Scanner object
