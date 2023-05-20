@@ -8,29 +8,17 @@ import java.util.Scanner;  // Import the Scanner class
  * @version 1 Last modified on 17/05/2023
  */ 
 public class Client { private static Socket socket;
-	public static void main(String[] args) throws Exception {
-// Adresse et port du serveur 
-			Scanner sc = new Scanner(System.in);  // Create a Scanner object
-			System.out.println("Enter port number");
-		    int portID = sc.nextInt();  // Read user input
-		    if (portID<5000 || portID>5050) {
-		    	throw new IllegalArgumentException("Error: Port ID must be between 5000 and 5050");
-		    }
-		    sc.nextLine();
-		    System.out.println("Enter IP address");
-			String serverAddress = sc.nextLine();  
-			// Uses an Arrays method to see if the IP address is valid
-			boolean ipValid = Arrays
-					  .stream(serverAddress.split("."))
-					  .mapToInt(Integer::parseInt)
-					  .filter(x -> x >= 0 && x <= 255) // remove invalid numbers
-					  .toArray().length == 4; // if the resulting length is 4, the ip is valid
-		    if (ipValid=false) {
-		    	throw new IllegalArgumentException("Error:  Invalid IP address");
-		    }
-		    
-		 // Création d'une nouvelle connexion aves le serveur 
-		    try {
+//ATTRIBUTES
+	private String userName;
+	private String serverAddress;
+	private int portID;
+//Methods
+	public Client(String serverAddress, int portID) {
+        this.serverAddress = serverAddress;
+        this.portID = portID;
+    }
+	public void execute() {
+		 try {
 				socket = new Socket(serverAddress, portID);
 				System.out.format("Connexion launched to server [%s:%d]", serverAddress, portID);
 		// Creation d'un canal entrant pour recevoir les messages envoyés, par le serveur
@@ -61,6 +49,32 @@ public class Client { private static Socket socket;
 		        		serverAddress);
 		        System.exit(1);
 		    }
+	}
+	public static void main(String[] args) throws Exception {
+// Adresse et port du serveur 
+			Scanner sc = new Scanner(System.in);  // Create a Scanner object
+			System.out.println("Enter port number");
+		    int portID = sc.nextInt();  // Read user input
+		    if (portID<5000 || portID>5050) {
+		    	throw new IllegalArgumentException("Error: Port ID must be between 5000 and 5050");
+		    }
+		    sc.nextLine();
+		    System.out.println("Enter IP address");
+			String serverAddress = sc.nextLine();  
+			// Uses an Arrays method to see if the IP address is valid
+			boolean ipValid = Arrays
+					  .stream(serverAddress.split("."))
+					  .mapToInt(Integer::parseInt)
+					  .filter(x -> x >= 0 && x <= 255) // remove invalid numbers
+					  .toArray().length == 4; // if the resulting length is 4, the ip is valid
+		    if (ipValid=false) {
+		    	throw new IllegalArgumentException("Error:  Invalid IP address");
+		    }
+		    Client client = new Client(serverAddress, portID);
+	        client.execute();
+		    
+		 // Création d'une nouvelle connexion aves le serveur 
+		   
 	// Attente de la réception d'un message envoyé par le, server sur le canal
 			//String helloMessageFromServer = in.readUTF();
 			//System.out.println(helloMessageFromServer); 
@@ -78,4 +92,22 @@ public class Client { private static Socket socket;
 		//int port = 5000;
 
 }
+	/**
+	 * @summary sets the username for the Client.java class
+	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @version 1.0 Last modified on 19/05/2023
+	 */ 
+    void setUserName(String userName) {
+        this.userName = userName;
+    }
+ 
+	/**
+	 * @summary grabs the username for the Client.java class
+	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @version 1.0 Last modified on 19/05/2023
+	 */ 
+    String getUserName() {
+        return this.userName;
+    }
+
 }
