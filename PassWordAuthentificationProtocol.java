@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * @summary The purpose of this class is to authenticate the user to the server
  * @author Alexandre Nguyen & Louis-Antoine
- * @version 2.0 Last modified on 20/05/2023
+ * @version 3.0 Last modified on 21/05/2023
  */ 
 public class PassWordAuthentificationProtocol {
 	private static final int WAITING= 0;
@@ -41,7 +41,7 @@ public class PassWordAuthentificationProtocol {
      * @param theInput which is the user's input
      * @return theOutput which is the server's response to the user's input
      * @author Alexandre Nguyen & Louis-Antoine
-     * @version 1.0 Last modified on 16/05/2023
+     * @version 2.0 Last modified on 21/05/2023
      * 
      */ 
     public String processInput(String theInput) {
@@ -62,7 +62,7 @@ public class PassWordAuthentificationProtocol {
         	//if the user was found in the database
             if (isUserFOund==false) {
             	users.put(currentUser,theInput);
-            	theOutput = "Welcome unsuspecting Canadian user:"+currentUser+"Your password is: "+theInput+ "Write bye to exit the server.";
+            	theOutput = "Welcome unsuspecting Canadian user:"+currentUser+". Your password is: "+theInput+ ". Write disconnect to exit the server.\n";
             	try {
             		writeToTxt();
             	}
@@ -73,14 +73,14 @@ public class PassWordAuthentificationProtocol {
         	}
           //if the user has entered the correct password
             else if (isUserFOund==true && theInput.equals(currentPassword)==true) {
-                theOutput = "Welcome back unsuspecting Canadian user:"+currentUser+". Write bye to exit the server.";
+                theOutput = "Welcome back unsuspecting Canadian user:"+currentUser+". Write disconnect to exit the server.\n";
                 state = AUTHENTICATED;   
              //if the user has not entered the correct password
             } else if (isUserFOund==true && theInput.equals(currentPassword)==false) {
-                theOutput = "Wrong password for this unsuspecting Canadian user. Please reenter your password";
+                theOutput = "Wrong password for this unsuspecting Canadian user. Please reenter your password \n";
             }
         } else if (state ==  AUTHENTICATED) {
-        	if (theInput.equals("bye")) {
+        	if (theInput.equals("disconnect")) {
 	        	theOutput = "Bye.";
 	        	state = EXIT;
         	}
@@ -135,9 +135,24 @@ public class PassWordAuthentificationProtocol {
     	return container;
     }
     
+    /**
+     * @summary The purpose of this function is to grab the current state of the password Authentification protocol
+     * @return an integer with the state of the password Authentification protocol
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 1.0 Last modified on 21/05/2023
+     * 
+     */ 
     public int getState() {
     	return state;
     }
+    
+    /**
+     * @summary The purpose of this function is to grab the username current stored in the password Authentification protocol
+     * @return a string with the username
+     * @author Alexandre Nguyen & Louis-Antoine
+     * @version 1.0 Last modified on 21/05/2023
+     * 
+     */ 
     
     public String getUser() {
     	return currentUser;
