@@ -5,11 +5,10 @@ import java.util.Scanner;  // Import the Scanner class
 /**
  * @summary The purpose of this class is to define an User class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 2 Last modified on 20/05/2023
+ * @version 3 Last modified on 21/05/2023
  */ 
 public class Client { private static Socket socket;
 //ATTRIBUTES
-	private String userName;
 	private String serverAddress;
 	private int portID;
 //Methods
@@ -23,25 +22,6 @@ public class Client { private static Socket socket;
 				System.out.format("Connexion launched to server [%s:%d]", serverAddress, portID);
 				new ReadThread(socket, this).start();
 	            new WriteThread(socket, this).start();
-		// Creation d'un canal entrant pour recevoir les messages envoyés, par le serveur
-//			    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//			 // Creation of input and output readers   
-//			    BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
-//			    BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-//			    String fromServer;
-//			    String fromUser;
-			    // Defines interaction between server and client 
-//				while ((fromServer = in.readLine()) != null) {
-//				    System.out.println("Server: " + fromServer);
-//				    if (fromServer.equals("Bye."))
-//				        break;
-//	
-//				    fromUser = stdIn.readLine();
-//				    if (fromUser != null) {
-//				        System.out.println("Client: " + fromUser);
-//				        out.println(fromUser);
-//				    }
-//				}
 		    }
 		    catch (UnknownHostException e) {
 		        System.err.println("Don't know about host " + serverAddress);
@@ -75,23 +55,6 @@ public class Client { private static Socket socket;
 		    Client client = new Client(serverAddress, portID);
 	        client.execute();
 
+	}
 }
-	/**
-	 * @summary sets the username for the Client.java class
-	 * @author Alexandre Nguyen & Louis-Phlippe
-	 * @version 1.0 Last modified on 19/05/2023
-	 */ 
-    void setUserName(String userName) {
-        this.userName = userName;
-    }
- 
-	/**
-	 * @summary grabs the username for the Client.java class
-	 * @author Alexandre Nguyen & Louis-Phlippe
-	 * @version 1.0 Last modified on 19/05/2023
-	 */ 
-    String getUserName() {
-        return this.userName;
-    }
-
-}
+	
