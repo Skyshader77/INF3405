@@ -86,8 +86,6 @@ public class Client { private static Socket socket;
 			//dataOut.writeUTF(userInput);
 			//System.out.println(userInput); 
 	// fermeture de La connexion avec le serveur 
-			socket.close();
-		
 		//String serverAddress = "127.0.0.1";
 		//int port = 5000;
 
