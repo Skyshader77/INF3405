@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * @summary The purpose of this class is to authenticate the user to the server
  * @author Alexandre Nguyen & Louis-Antoine
- * @version 1.0 Last modified on 13/05/2023
+ * @version 2.0 Last modified on 20/05/2023
  */ 
 public class PassWordAuthentificationProtocol {
 	private static final int WAITING= 0;
@@ -46,7 +46,6 @@ public class PassWordAuthentificationProtocol {
      */ 
     public String processInput(String theInput) {
         String theOutput = null;
- 
         if (state == WAITING) {
         	theOutput ="Please enter your username, unsuspecting Canadian user:";
         	state = AUTHENTICATINGUSERNAME;
@@ -63,7 +62,7 @@ public class PassWordAuthentificationProtocol {
         	//if the user was found in the database
             if (isUserFOund==false) {
             	users.put(currentUser,theInput);
-            	theOutput = "Welcome unsuspecting Canadian user:"+currentUser+"Your password is: "+theInput+ "Press n/N to exit the server.";
+            	theOutput = "Welcome unsuspecting Canadian user:"+currentUser+"Your password is: "+theInput+ "Write bye to exit the server.";
             	try {
             		writeToTxt();
             	}
@@ -74,14 +73,14 @@ public class PassWordAuthentificationProtocol {
         	}
           //if the user has entered the correct password
             else if (isUserFOund==true && theInput.equals(currentPassword)==true) {
-                theOutput = "Welcome back unsuspecting Canadian user:"+currentUser+". Press n/N to exit the server.";
+                theOutput = "Welcome back unsuspecting Canadian user:"+currentUser+". Write bye to exit the server.";
                 state = AUTHENTICATED;   
              //if the user has not entered the correct password
             } else if (isUserFOund==true && theInput.equals(currentPassword)==false) {
                 theOutput = "Wrong password for this unsuspecting Canadian user. Please reenter your password";
             }
         } else if (state ==  AUTHENTICATED) {
-        	if (theInput.equalsIgnoreCase("n")) {
+        	if (theInput.equals("bye")) {
 	        	theOutput = "Bye.";
 	        	state = EXIT;
         	}
@@ -135,8 +134,15 @@ public class PassWordAuthentificationProtocol {
         reader.close();
     	return container;
     }
+    
+    public int getState() {
+    	return state;
+    }
+    
+    public String getUser() {
+    	return currentUser;
+    }
 }
-
 //public void WriteBeautifully(theInput) {
 	//TO DO: transform the input into what the teacher wants.
 //}
