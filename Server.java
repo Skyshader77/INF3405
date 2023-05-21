@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a Server class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 2.0 Last modified on 18/05/2023
+ * @version 3.0 Last modified on 20/05/2023
  */ 
 
 import java.net.InetAddress; 
@@ -112,3 +112,4 @@ public class Server {
 	        }
 }
 }
+
