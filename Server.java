@@ -40,7 +40,7 @@ public class Server {
 				// Association de l'adresse et du port à la connexien
 				Listener.bind(new InetSocketAddress(serverIP, this.port));
 				System.out.format("The server is running on %s:%d%n", serverAddress, this.port); 
-				System.out.format("Welcome to FBI van #1 server. This is a totally harmless server in the vicinity of your street."); 
+				System.out.format("\n Welcome to FBI van #1 server. This is a totally harmless server in the vicinity of your street."); 
 				// À chaque fois qu'un nouveau client se, connecte, on exécute la fonstion
 				// run() de l'objet ClientHandler 
 				while (true) {
