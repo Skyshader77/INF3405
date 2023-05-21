@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a ClientHandler class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 2.0 Last modified on 20/05/2023
+ * @version 4.0 Last modified on 21/05/2023
  */ 
 
 
