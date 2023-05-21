@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a ClientHandler class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 1.0 Last modified on 18/05/2023
+ * @version 2.0 Last modified on 20/05/2023
  */ 
 
 
@@ -17,7 +17,9 @@ import java.net.ServerSocket;
 public class ClientHandler extends Thread{
 	private Socket socket;
 	private int clientNumber;
-	
+	private PrintWriter out;
+	private String username;
+	private static final int AUTHENTICATED= 3;
 	public ClientHandler(Socket socket, int clientNumber, Server server) {
 		this.socket = socket; this.clientNumber = clientNumber;
 		System.out.println("New connection with client#" + clientNumber + " at" + socket);
@@ -25,17 +27,22 @@ public class ClientHandler extends Thread{
 	public void run() {   
 		// Création de thread qui envoi un message à un client 
 		try {
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			out = new PrintWriter(socket.getOutputStream(), true);
 			PassWordAuthentificationProtocol Pap=new PassWordAuthentificationProtocol();
 			BufferedReader bufferedIn= new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String inputLine, outputLine;
 			 // Initiate conversation with client
 		    outputLine = Pap.processInput(null);
 		    out.println(outputLine);
-		    while ((inputLine = bufferedIn.readLine()) != null) {
+		    while (Pap.getState()<AUTHENTICATED) {
+		    	inputLine = bufferedIn.readLine();
 		        outputLine = Pap.processInput(inputLine);
 		        out.println(outputLine);
-		        if (outputLine.equalsIgnoreCase("n"))
+		    }
+		    username=Pap.getUser();
+		    while ((inputLine = bufferedIn.readLine()) != null) {
+		        out.println(username+inputLine);
+		        if (inputLine.equalsIgnoreCase("bye"))
 		            break;
 		    }
 	        //String clientLeft = clientNumber + " has been swatted and was forced to disconnect.";
@@ -57,9 +64,9 @@ public class ClientHandler extends Thread{
 	 * @author Alexandre Nguyen & Louis-Phlippe
 	 * @version 1.0 Last modified on 19/05/2023
 	 */ 
-	//public PrintWriter getWriter() {
-	        //return this.out;
-	//}
+	public PrintWriter getWriter() {
+	        return this.out;
+	}
 	/**
 	 * @summary returns the PassWordAuthentificationProtocol of the clientHandler class
 	 * @author Alexandre Nguyen & Louis-Phlippe
