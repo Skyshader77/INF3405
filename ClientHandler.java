@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a ClientHandler class
- * @author Alexandre Nguyen & Louis-Antoine
- * @version 3.0 Last modified on 21/05/2023
+ * @author Alexandre Nguyen & Louis-Phlippe
+ * @version 2.0 Last modified on 20/05/2023
  */ 
 
 
@@ -51,7 +51,7 @@ public class ClientHandler extends Thread{
 		    
 		    username=Pap.getUser();
 		    
-		    //printLastMessages();
+		    printLastMessages(out);
 		    
 		    //while the user has not been disconnected
 		    while ((inputLine = bufferedIn.readLine()) != null) {
@@ -136,7 +136,7 @@ public class ClientHandler extends Thread{
      * @author Alexandre Nguyen & Louis-Antoine
      * @version 2.0 Last modified on 15/05/2023
      * 
-     */ 
+
     public void printLastMessages() {
         try {
         	BufferedReader reader = new BufferedReader(new FileReader("clientChat.txt"));
@@ -161,14 +161,14 @@ public class ClientHandler extends Thread{
             System.out.println("Failed to read the chat messages from the file.");
         }
     } 
-    
+    */ 
     /**
      * @summary The purpose of this function is to read the username/password combinations from a TXT file
      * @return a Boolean saying if the operation succeeded or not
      * @author Alexandre Nguyen & Louis-Antoine
      * @version 2.0 Last modified on 15/05/2023
      * 
-
+*/ 
     public void printLastMessages(PrintWriter out) {
         try {
         	BufferedReader reader = new BufferedReader(new FileReader("clientChat.txt"));
@@ -183,6 +183,7 @@ public class ClientHandler extends Thread{
            			messages.removeFirst();
            }
            
+           out.println("Your last available message(s) is/are : ");
            for (String message : messages) {
                 out.println(message);
             }
@@ -192,6 +193,5 @@ public class ClientHandler extends Thread{
         } catch (IOException e) {
             System.out.println("Failed to read the chat messages from the file.");
         }
-    } 
-         */ 
+    }  
 }
