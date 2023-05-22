@@ -1,0 +1,178 @@
+\documentclass[11pt,letterpaper]{article}
+
+
+%-----------------------------------------------------------------%
+% Definitions
+\newcommand{\session}{Summer \the\year{}}
+\newcommand{\firstauthor}{Alexandre Nguyen}
+\newcommand{\firstregistrationnumber}{1631518}
+\newcommand{\secondauthor}{Louis-Antoine Martel-Marquis}
+\newcommand{\secondregistrationnumber}{2222436}
+\newcommand{\reportnumber}{1}
+\newcommand{\firsttitle}{TP1}
+\newcommand{\secondtitle}{Chat Messaging Application}
+%-----------------------------------------------------------------%
+
+
+\usepackage[latin1]{inputenc}
+\usepackage[cyr]{aeguill}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{textpos}
+\usepackage{graphicx}
+\usepackage[french]{babel}
+\usepackage{color}
+\usepackage{array}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+
+\oddsidemargin 0pt
+\topmargin 0pt
+\textwidth 6.5in
+\textheight 8.1in
+
+\definecolor{bleu_poly}{RGB}{65,170,230}
+\definecolor{vert_poly}{RGB}{140,200,60}
+\definecolor{orange_poly}{RGB}{250,150,30}
+\definecolor{rouge_poly}{RGB}{185,30,50}
+\definecolor{gris_poly}{RGB}{166,168,171}
+
+\title{\vspace{-2.5cm} \noindent\makebox[\linewidth]{\color{rouge_poly}{\rule{\textwidth}{1.5pt}}}
+		\begin{center}
+		\begin{tabular}{m{6.5cm}m{6cm}}
+		\textbf{ \huge Rapport \#\reportnumber}  & \includegraphics[width=0.4\textwidth]{logo_polytechnique.eps}
+		\end{tabular}
+		\end{center}
+		\vspace{-0.25cm}
+		\noindent\makebox[\linewidth]{\color{rouge_poly}{\rule{\textwidth}{1.5pt}}}
+		\\ \  \\
+		\Huge \firsttitle \\ \secondtitle  
+		\\ \ \\
+		\LARGE INF3405 -  Reseaux Informatiques
+		}
+
+
+\author{\session \\ Department of Computer Engineering \\ Ecole Polytechnique de Montreal} 
+
+\date{Last update: \today}
+
+\pagestyle{fancy}
+
+\lfoot{\session}
+\cfoot{INF3405 -  Reseaux Informatiques}
+\rfoot{\thepage/\pageref{LastPage}}
+\chead{}
+\lhead{\emph{Rapport \#1 -- \firstauthor  \, (\firstregistrationnumber)/\secondauthor\,  (\secondregistrationnumber)}}
+\rhead{\includegraphics[width=2.5cm]{logo_polytechnique.eps}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt} 
+\setlength{\headheight}{45pt}
+
+\graphicspath{{Figures/}}
+
+\newcommand{\vb}[1]{\mathbf{#1}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+
+\begin{document}
+\maketitle
+\noindent\makebox[\linewidth]{\color{rouge_poly}{\rule{\textwidth}{1.5pt}}} 
+
+\noindent \LARGE \firstauthor  \hfill \firstregistrationnumber
+
+\noindent \LARGE \secondauthor \hfill \secondregistrationnumber
+
+\noindent\makebox[\linewidth]{\color{rouge_poly}{\rule{\textwidth}{1.5pt}}}
+
+
+\newpage
+\normalsize
+
+%-----------------------------------------------------------------%
+\section{Introduction}
+%-----------------------------------------------------------------%
+
+The goal of this task was to build  a functional chat messaging application. The primary requirements of the application were as follows:
+\begin{itemize}
+  \item Multiple clients must be able connect to a server
+  \item The server must be able to authenticate an user
+  \item The server must be able to store usernames and passwords
+   \item The server must be able to store and broadcast messages written by all users
+\end{itemize}
+
+%-----------------------------------------------------------------%
+\section{Summary of the Solution}
+%-----------------------------------------------------------------%
+
+
+The solution consists of the following classes
+\begin{itemize}
+  \item Server
+  \item Client
+  \item ClientHandler
+   \item PassWordAuthentificationProtocol
+\end{itemize}
+
+\subsection{Server}
+The role of the Server class is to create a ServerSocket object and bind it to a port and an IP address. The input port and IP address are assumed to be constant. Everytime an user connects to the server, a ClientHandler object is create to manage the new client.
+
+\begin{itemize}
+  \item A Set of Clienthandler objects
+  \item A Set of userNumber integers
+\item A method communicateBetweenClients to broadcast an user's message to all other users connected in the server.
+\item A method EliminateClient to remove a client from the server
+\end{itemize}
+
+\subsection{Client}
+The Client class contains the following major features:
+\begin{itemize}
+  \item A socket linking it to the server
+  \item An input reader for server messages
+  \item An input reader for messages the client sends.
+  \item an output writer for messages the client wants to send
+\end{itemize}
+
+\subsection{ClientHandler}
+The clienthandler determines determines what needs to be done when a client connects to the server. There is one clienthandler per client. It has its own input reader and output writer to help it manage its client. Its main role is to create  a PassWordAuthentificationProtocol which manages  the interaction between the server and the client.
+
+
+\subsection{PassWordAuthentificationProtocol}
+The PassWordAuthentificationProtocol manages the state of the interaction between the server and the client. The user's input serves as the function's input parameter. The user's input is processed by the class and may go through up to 5 consecutive states:
+
+\begin{itemize}
+  \item WAITING the initial state of the protocol
+  \item AUTHENTICATINGUSERNAME  where the user is prompted to insert their username
+  \item AUTHENTICATINGPASSWORD where the user is prompted to insert their password. A username/password verification is done at this step. 
+  \item AUTHENTICATED. Once the user has passed the username/password check, this state allows the user to broadcast their messages to all other users in the chat application.
+  \item EXIT the user may disconnect by typing n/N on the console. The protocol then returns "Bye" which disconnects the user from the application
+\end{itemize}
+
+\medskip
+
+The server class uses sets as attributes to handle
+
+%-----------------------------------------------------------------%
+\section{Difficulties Encountered}
+%-----------------------------------------------------------------%
+The team encoutered issues while trying to implement multithreading or the ability for multiple users to interact with one another in the application.
+
+
+%-----------------------------------------------------------------%
+\section{Criticism and Improvements}
+%-----------------------------------------------------------------%
+The following improvements could be brought to this activity:
+\begin{itemize}
+  \item The code as-is in the pdf cannot be easily copied and pasted into Java. This is an error prone process since formatting must be redone nad students may forget to copy and paste some lines.
+  \item Diagrams detailing the interaction between the client, clienthandler and server class work would also have been helpful.
+  \item Links to multi threading in a server (how to connect multiple users) could be provided in the future for students. That information was not readily available in the documentation provided.
+\end{itemize}
+
+%-----------------------------------------------------------------%
+\section{Conclusion}
+%-----------------------------------------------------------------%
+In conclusion, the team was able to successfully build a personalized chat server application. This allowed the team to understand the basics of building a client class, a server class as well as an user interaction protocol.
+
+\end{document}
