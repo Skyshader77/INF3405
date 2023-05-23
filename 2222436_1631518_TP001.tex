@@ -107,8 +107,6 @@ The goal of this task was to build  a functional chat messaging application. The
 %-----------------------------------------------------------------%
 \section{Summary of the Solution}
 %-----------------------------------------------------------------%
-
-
 The solution consists of the following classes
 \begin{itemize}
   \item Server
@@ -120,13 +118,13 @@ The solution consists of the following classes
 \end{itemize}
 
 \subsection{Server}
-The role of the Server class is to create a ServerSocket object and bind it to a port and an IP address. The input port and IP address are assumed to be constant. Everytime an user connects to the server, a ClientHandler object is create to manage the new client. The main components of the Server class are:
+The role of the Server class is to create a ServerSocket object and bind it to a port and an IP address. The input port and IP address are assumed to be constant and are known by the user in advance. Everytime an user connects to the server, a ClientHandler object is create to manage the new client. The main components of the Server class are:
 
 \begin{itemize}
   \item An attribute set of Clienthandler objects
   \item A attribute set of userNumber integers
-\item A method communicateBetweenClients to broadcast an user's message to all other users connected in the server.
-\item A method EliminateClient to remove a client from the server
+\item A method communicateBetweenClients to broadcast an user's message to all other users connected in the server save themselves.
+\item A method EliminateClient to remove a client from the server once they are disconnected.
 \end{itemize}
 
 \subsection{Client}
@@ -138,13 +136,13 @@ The purpose Client class is to connect to the server via a socket as well as ini
 \end{itemize}
 
 \subsection{Readthread}
-The purpose of the Readthread is to run an input reader until the socket is closed. As mentionned previously, this object runs simultaneously with the Write thread object.
+The purpose of the Readthread class is to run an input reader until the socket is closed. As mentionned previously, this object runs simultaneously with the Writethread object.
 
 \subsection{Writethread}
-The purpose of the Writethread is to run an output  reader until the user writes disconnect in the console. As mentionned previously, this object runs simultaneously with the Read thread object.
+The purpose of the Writethread class is to run an output reader until the user writes disconnect in the console. As mentionned previously, this object runs simultaneously with the Readthread object.
 
 \subsection{ClientHandler}
-The clienthandler determines determines what needs to be done when a client connects to the server. There is one clienthandler per client. It has its own input reader and output writer to help it manage its client. The main featuress of the Clienthandler class are:
+The clienthandler determines what needs to be done when a client connects to the server. There is only one clienthandler per client. It has its own input reader and output writer to help it manage its client. The main features of the Clienthandler class are:
 \begin{itemize}
   \item Calling a Password Authentification protocol to authenticate the user by the means of their username and password.
   \item Calling the communicateBetweenClients method define previously
@@ -153,7 +151,7 @@ The clienthandler determines determines what needs to be done when a client conn
 \end{itemize}
 
 \subsection{PassWordAuthentificationProtocol}
-The PassWordAuthentificationProtocol manages the state of the interaction between the server and the client. The user's input serves as the function's input parameter. The user's input is processed by the class and may go through up to 4 consecutive states:
+The PassWordAuthentificationProtocol manages the state of the interaction between the server and the client. The user's input on the console serves as the function's input parameter. The user's input is processed by the class and may go through up to 4 consecutive states:
 
 \begin{itemize}
   \item WAITING the initial state of the protocol
@@ -162,20 +160,17 @@ The PassWordAuthentificationProtocol manages the state of the interaction betwee
   \item AUTHENTICATED. Once the user has passed the username/password check, this state allows the user to broadcast their messages to all other users in the chat application.
 \end{itemize}
 
-\medskip
-
 %-----------------------------------------------------------------%
 \section{Difficulties Encountered}
 %-----------------------------------------------------------------%
-The team encoutered issues while trying to implement multithreading or the ability for multiple users to interact with one another in the application. The team had trouble grasping the fact that the program had to allow reading and writing to/from the console simulateneously. Online documentation and examples had to be consulted to fully understand that. In addition, the team attempted to implement the Password Authentification protocol in the Client class. This was unsuccessful for reasons still unclear to the team.  The Password Authentification protocol ended up being incorporated in the Clienthandler class as shown in the code.
-
+The team encoutered issues while trying to implement multithreading or the ability for multiple users to interact with one another in the application. The team had trouble grasping the fact that the program had to allow reading and writing to/from the console simulateneously. Online documentation and examples had to be consulted to fully understand that. In addition, the team attempted to implement the Password Authentification protocol in the Client class. This was unsuccessful for reasons still unclear to the team.  The Password Authentification protocol ended up being incorporated in the Clienthandler class as shown in the code. One more bug encountered by the team was how to print the list of 15 past messages. The printIn method of the Printwriter class failed to print the full list of 15 messages. The team tried many attempts to solve this issue.
 
 %-----------------------------------------------------------------%
 \section{Criticism and Improvements}
 %-----------------------------------------------------------------%
 The following improvements could be brought to this activity:
 \begin{itemize}
-  \item The code as-is in the pdf cannot be easily copied and pasted into Java. This is an error prone process since formatting must be redone and students may forget to copy and paste some lines.
+  \item The code as-is in the pdf provided by the course cannot be easily copied and pasted into Java. This is an error prone process since formatting must be redone and students may forget to copy and paste some lines.
   \item Diagrams detailing the interaction between the client, clienthandler and server class work would also have been helpful.
   \item Links to multi threading in a server (how to connect multiple users) could be provided in the future for students. That information was not readily available in the documentation provided.
    \item The mandatory rule of 3 students per team could be improved. The class saw a fair amount of students leaving the course. Perhaps the teacher or the teaching assistant may help with the pairings to cover these situations.
@@ -184,6 +179,6 @@ The following improvements could be brought to this activity:
 %-----------------------------------------------------------------%
 \section{Conclusion}
 %-----------------------------------------------------------------%
-In conclusion, the team was able to successfully build a personalized chat server application which allows multiple users to chat in a public space. This allowed the team to understand the basics of building a client class, a server class as well as an user interaction protocol.
+In conclusion, the team was able to successfully build a personalized chat server application which allows multiple users to chat in a public space. This allowed the team to understand the basics of building a client class, a server class, a clienthandler class as well as an user interaction protocol.
 
 \end{document}
