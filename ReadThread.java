@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a class which manages an the inputs from the server
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 2.0 Last modified on 21/05/2023
+ * @version 3.0 Last modified on 24/05/2023
  */ 
 
 import java.io.*;
@@ -20,7 +20,7 @@ public class ReadThread extends Thread{
         this.client = client;
     }
     public void run() {
-	        while (true) {
+	        while (true && !socket.isClosed()) {
 	        	try {
 	        		input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	    	    	String serverResponse=input.readLine();
