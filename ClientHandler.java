@@ -2,7 +2,7 @@
  /**
  * @summary The purpose of this class is to define a ClientHandler class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 3.0 Last modified on 25/05/2023
+ * @version 4.0 Last modified on 25/05/2023
  */ 
 
 
@@ -30,7 +30,7 @@ public class ClientHandler extends Thread{
 			DataInputStream bufferedIn= new DataInputStream(socket.getInputStream());
 			String inputLine, outputLine;
 			 // Initiate conversation with client
-		    outputLine = Pap.processInput(null);
+		    outputLine = Pap.processInput("Start Authentication");
 		    out.writeUTF(outputLine);
 		    //while the user has not been authenticated
 		    while (Pap.getState()<AUTHENTICATED) {
@@ -42,30 +42,24 @@ public class ClientHandler extends Thread{
 		    printLastMessages(out);
 		    //while the user has not been disconnected
 		    while ((inputLine = bufferedIn.readUTF()) != null) {
+		    	if (inputLine.equalsIgnoreCase("disconnect")) {
+		    		socket.close();
+		    		server.EliminateClient(clientNumber, this);
+			        String clientLeft =username + " has been swatted and was forced to disconnect.";
+			        server.communicateBetweenClients(clientLeft, this);
+		            break;
+		    	}
 		    	String formattedOutput=formatClientInput(inputLine);
 		        out.writeUTF(formattedOutput);
-			saveClientInputTXT(formattedOutput);
+		        saveClientInputTXT(formattedOutput);
 		        server.communicateBetweenClients(formattedOutput, this);
-		        if (inputLine.equalsIgnoreCase("disconnect"))
-		            break;
+		        
 		    }
 		} catch (IOException e) {
 			System.out.println("Error handling client# " + clientNumber + ": " + e.getMessage());
 			e.printStackTrace();
-		} finally {
-			try {
-				//deletes the user from the server
-			    server.EliminateClient(clientNumber, this);
-		        String clientLeft =username + " has been swatted and was forced to disconnect.";
-		        server.communicateBetweenClients(clientLeft, this);
-		        socket.close();
-			} catch (IOException e) {
-				System.out.println("Couldn't close a socket, what's going on?" + e.getMessage());
-	            e.printStackTrace();
-			}
-				System.out.println("Connection with " + username + " closed");
-			}
-		}
+		} 
+	}
 	/**
 	 * @summary returns the printwriter of the clientHandler class
 	 * @author Alexandre Nguyen & Louis-Phlippe
@@ -99,7 +93,7 @@ public class ClientHandler extends Thread{
      * 
      */ 
     public void saveClientInputTXT(String theInput) throws IOException{
-		BufferedWriter writer = new BufferedWriter(new FileWriter("clientChat.txt", true));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("NSA_Spy_File.txt", true));
 
 		writer.write(theInput);
 		writer.newLine();
