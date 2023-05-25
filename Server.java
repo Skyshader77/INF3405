@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a Server class
- * @author Alexandre Nguyen & Louis-Phlippe
- * @version 3.0 Last modified on 20/05/2023
+ * @author Alexandre Nguyen & Louis-Antoine
+ * @version 4.0 Last modified on 21/05/2023
  */ 
 
 import java.net.InetAddress; 
@@ -110,6 +110,14 @@ public class Server {
 	        	clientHandlers .remove(clienthandler);
 	            System.out.println("The target " + userID + " has been swatted and has been forced to disconnect.");
 	        }
-}
+    }
+    
+   public int getPort(){ 
+	   return this.port; 
+   } 
+   
+   public String getServerAddress() { 
+	   return this.serverAddress; 
+   }
 }
 
