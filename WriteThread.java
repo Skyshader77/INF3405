@@ -2,7 +2,7 @@
 /**
  * @summary The purpose of this class is to define a class which manages an user's outputs to the console
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 3.0 Last modified on 25/05/2023
+ * @version 4.0 Last modified on 25/05/2023
  */ 
 
 
@@ -16,7 +16,6 @@ public class WriteThread extends Thread {
     private Client client;
     private Scanner sc;
     private DataOutputStream output;
-    private DataInputStream inputReader;
   //METHODS
     public WriteThread(Socket socket, Client client) {
         this.socket = socket;
@@ -39,7 +38,13 @@ public class WriteThread extends Thread {
 	        	inputtext = sc.nextLine();
 	        	output.writeUTF(inputtext);
 	        } while (!inputtext.equals("disconnect"));
-	        output.close();
+	        try {
+	        	output.close();
+	            socket.close();
+	        } catch (IOException ex) {
+	 
+	            System.out.println("Error writing to server: " + ex.getMessage());
+	        }
         } catch (IOException ex) {
             System.out.println("Error writing to server: " + ex.getMessage());
             ex.printStackTrace();
