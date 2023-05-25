@@ -44,6 +44,7 @@ public class ClientHandler extends Thread{
 		    while ((inputLine = bufferedIn.readUTF()) != null) {
 		    	String formattedOutput=formatClientInput(inputLine);
 		        out.writeUTF(formattedOutput);
+			saveClientInputTXT(formattedOutput);
 		        server.communicateBetweenClients(formattedOutput, this);
 		        if (inputLine.equalsIgnoreCase("disconnect"))
 		            break;
