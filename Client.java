@@ -5,7 +5,7 @@ import java.util.Scanner;  // Import the Scanner class
 /**
  * @summary The purpose of this class is to define an User class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 3 Last modified on 21/05/2023
+ * @version 4 Last modified on 25/05/2023
  */ 
 public class Client { private static Socket socket;
 //ATTRIBUTES
