@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to define a Server class
  * @author Alexandre Nguyen & Louis-Phlippe
- * @version 3.0 Last modified on 20/05/2023
+ * @version 5.0 Last modified on 25/05/2023
  */ 
 
 import java.net.InetAddress; 
@@ -33,8 +33,9 @@ public class Server {
 			int clientNumber = 0;
 			// Adresse et port du serveur
 			// Création de la connexien pour communiquer ave les, clients
-
-			try (ServerSocket Listener = new ServerSocket()){
+			
+			try {
+				Listener = new ServerSocket();	
 				Listener.setReuseAddress(true);
 				InetAddress serverIP = InetAddress.getByName(serverAddress);
 				// Association de l'adresse et du port à la connexien
@@ -44,16 +45,23 @@ public class Server {
 				// À chaque fois qu'un nouveau client se, connecte, on exécute la fonstion
 				// run() de l'objet ClientHandler 
 				while (true) {
-					// Important : la fonction accept() est bloquante: attend qu'un prochain client se  connecte
-					// Une nouvetle connection : on incrémente le compteur clientNumber 
-					ClientHandler newTarget=new ClientHandler(Listener.accept(), clientNumber++,this);
+					// 
+					ClientHandler newTarget=new ClientHandler(Listener.accept(), clientNumber,this);
 					clientHandlers.add(newTarget);
 					addFBIClient(clientNumber);
+					clientNumber++;
 					newTarget.start();
 				}	
 			} catch (IOException ex) {
 	            System.out.println("Error in the server: " + ex.getMessage());
 	            ex.printStackTrace();
+	        }finally {
+	        	try {
+					Listener.close();
+				} catch (IOException e) {
+					System.out.println("Error closing the server: " + e.getMessage());
+					e.printStackTrace();
+				}
 	        }
 	 }
 	/**
@@ -79,14 +87,19 @@ public class Server {
 	/**
 	 * @summary grabs the list of usernames
 	 * @author Alexandre Nguyen & Louis-Phlippe
-	 * @version 1.0 Last modified on 18/05/2023
+	 * @version 2.0 Last modified on 25/05/2023
 	 */ 
 	
     public void communicateBetweenClients(String userInput, ClientHandler currentTarget) {
     	//loops through current users and if it's not the current user, broadcasts to the other users.
         for (ClientHandler fbiHandler : clientHandlers) {
             if (fbiHandler != currentTarget) {
-            	fbiHandler.getWriter().println(userInput);
+            	try {
+					fbiHandler.getWriter().writeUTF(userInput);
+				} catch (IOException e) {
+					System.out.println("Program failed to broadcast messages to other users.");
+					e.printStackTrace();
+				}
             }
        }
     }
@@ -107,9 +120,17 @@ public class Server {
     public  void EliminateClient(Integer userID, ClientHandler clienthandler) {
 	        boolean isEliminated = userNumbers.remove(userID);
 	        if (isEliminated) {
-	        	clientHandlers .remove(clienthandler);
+	        	clientHandlers.remove(clienthandler);
 	            System.out.println("The target " + userID + " has been swatted and has been forced to disconnect.");
 	        }
 }
-}
+    public int getPort(){ 
+ 	   return this.port; 
+    } 
+
+    public String getServerAddress() { 
+ 	   return this.serverAddress; 
+    }
+ }
+
 
