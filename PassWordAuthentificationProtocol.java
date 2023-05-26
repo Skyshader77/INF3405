@@ -1,7 +1,7 @@
 /**
  * @summary The purpose of this class is to authenticate the user to the server
  * and save each user's respective username and password
- * @author Alexandre Nguyen & Louis-Antoine
+ * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
  * @version 4 Last modified on 26/05/2023
  * 
  */ 
@@ -26,7 +26,7 @@ public class PassWordAuthentificationProtocol {
 
     /**
      * @summary The purpose of this constructor is to grab the password file if it exists and put it in the users map
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 1.0 Last modified on 15/05/2023
      * 
      */ 
@@ -43,7 +43,7 @@ public class PassWordAuthentificationProtocol {
      * @summary The purpose of this method is to process the user's input and determine if it is a username/password combination
      * @param theInput which is the user's input
      * @return theOutput which is the server's response to the user's input
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 2.0 Last modified on 21/05/2023
      * 
      */ 
