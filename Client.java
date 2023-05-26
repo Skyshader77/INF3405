@@ -1,24 +1,27 @@
+/**
+ * @summary The purpose of this class is to define an User class
+ * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
+ * @version 5 Last modified on 26/05/2023
+ * 
+ */ 
+
 import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 import java.util.Scanner;  // Import the Scanner class
-/**
- * @summary The purpose of this class is to define an User class
- * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
- * @version 4 Last modified on 25/05/2023
- */ 
+
 public class Client { private static Socket socket;
-	//ATTRIBUTES
+	// ATTRIBUTES
 	private String serverAddress;
 	private int portID;
 	
-
+	// CONSTRUCTOR
 	public Client(String serverAddress, int portID) {
         this.serverAddress = serverAddress;
         this.portID = portID;
     }
 	
-	//Methods
+	// METHODS	
 	public void execute() {
 		 try {
 				socket = new Socket(serverAddress, portID);
@@ -53,10 +56,8 @@ public class Client { private static Socket socket;
 			if (ipValid=false) {
 		    	throw new IllegalArgumentException("Error:  Invalid IP address");
 		    }
-		   
-			//sc.nextLine();
-			
-			System.out.println("Enter port number");
+		
+			System.out.println("Please enter a port number between 5000 and 5050:");
 		   
 			int portID = sc.nextInt();  // Read user input
 		   
