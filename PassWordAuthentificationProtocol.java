@@ -1,12 +1,16 @@
-import java.net.*;
-import java.io.*;
-import java.util.*;
 /**
  * @summary The purpose of this class is to authenticate the user to the server
+ * and save each user's respective username and password
  * @author Alexandre Nguyen & Louis-Antoine
- * @version 3.0 Last modified on 21/05/2023
+ * @version 4 Last modified on 26/05/2023
+ * 
  */ 
+
+import java.io.*;
+import java.util.*;
+
 public class PassWordAuthentificationProtocol {
+	// ATTRIBUTES
 	private static final int WAITING= 0;
     private static final int AUTHENTICATINGUSERNAME = 1;
     private static final int AUTHENTICATINGPASSWORD = 2;
@@ -20,14 +24,12 @@ public class PassWordAuthentificationProtocol {
     private String currentPassword="";
     private String currentUser="";
 
-    
     /**
      * @summary The purpose of this constructor is to grab the password file if it exists and put it in the users map
      * @author Alexandre Nguyen & Louis-Antoine
      * @version 1.0 Last modified on 15/05/2023
      * 
      */ 
-    
     public  PassWordAuthentificationProtocol() {
     	try {
     		users= readTxt();
@@ -36,6 +38,7 @@ public class PassWordAuthentificationProtocol {
     		users = new HashMap<String, String>();
     	}
     }
+    
     /**
      * @summary The purpose of this method is to process the user's input and determine if it is a username/password combination
      * @param theInput which is the user's input
@@ -45,7 +48,9 @@ public class PassWordAuthentificationProtocol {
      * 
      */ 
     public String processInput(String theInput) {
+    	
         String theOutput = null;
+        
         if (state == WAITING) {
         	theOutput ="Please enter your username, unsuspecting Canadian user:";
         	state = AUTHENTICATINGUSERNAME;
@@ -89,6 +94,7 @@ public class PassWordAuthentificationProtocol {
         }
         return theOutput;
     }
+    
     /**
      * @summary The purpose of this function is to write the username/password combinations to a TXT file
      * @return a Boolean saying if the operation succeeded or not
@@ -110,10 +116,11 @@ public class PassWordAuthentificationProtocol {
         }
         fbiLeak.close();
     }
+    
     /**
      * @summary The purpose of this function is to read the username/password combinations from a TXT file
      * @return a Boolean saying if the operation succeeded or not
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 2.0 Last modified on 15/05/2023
      * 
      */ 
@@ -138,7 +145,7 @@ public class PassWordAuthentificationProtocol {
     /**
      * @summary The purpose of this function is to grab the current state of the password Authentification protocol
      * @return an integer with the state of the password Authentification protocol
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 1.0 Last modified on 21/05/2023
      * 
      */ 
@@ -149,27 +156,11 @@ public class PassWordAuthentificationProtocol {
     /**
      * @summary The purpose of this function is to grab the username current stored in the password Authentification protocol
      * @return a string with the username
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 1.0 Last modified on 21/05/2023
      * 
      */ 
-    
     public String getUser() {
     	return currentUser;
     }
 }
-//public void WriteBeautifully(theInput) {
-	//TO DO: transform the input into what the teacher wants.
-//}
-
-//public void recordUserInputTXT() throws IOException{
-    	//TO DO: Put beautiful input in text file line by line
-		//We assume Two users do not speak at the same time
-//}
-
-//public String grabLastFifteenLines throws IOException{
-//
-
-//  TO DO: Grab last fifteen lines of text.  If there aren't fifteen lines, just grab any quantity you can find.
-
-//}
