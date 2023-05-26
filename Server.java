@@ -1,7 +1,8 @@
 /**
  * @summary The purpose of this class is to define a Server class
- * @author Alexandre Nguyen & Louis-Phlippe
- * @version 5.0 Last modified on 25/05/2023
+ * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
+ * @version 6 Last modified on 26/05/2023
+ * 
  */ 
 
 import java.net.InetAddress; 
@@ -9,19 +10,22 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket; 
 import java.util.*;
 import java.io.*;
+
 public class Server {
-	//Attributes
+	// ATTRIBUTES
 	private static ServerSocket Listener;
 	private  Set<Integer> userNumbers= new HashSet<>();
 	private  Set<ClientHandler> clientHandlers = new HashSet<>();
 	private int port;
 	private String serverAddress;
-	//Methods
+	
+	// CONSTRUCTOR
 	 public Server(int port, String serverAddress) {
 	        this.port = port;
 	        this.serverAddress = serverAddress;
 	    }
 	
+	// METHODS
 	public static void main(String[] args) throws Exception { 
 		String serverAddress = "127.0.0.1"; 
 		int serverPort = 5000;
@@ -29,10 +33,9 @@ public class Server {
 	     server.execute();
 	}
 	 public void execute() {
-			// Compteur incrémenté à chaque connexion d'un client au serveur 
+			
+		 	// Compteur incrémenté à chaque connexion d'un client au serveur 
 			int clientNumber = 0;
-			// Adresse et port du serveur
-			// Création de la connexien pour communiquer ave les, clients
 			
 			try {
 				Listener = new ServerSocket();	
@@ -64,32 +67,35 @@ public class Server {
 				}
 	        }
 	 }
+	 
 	/**
 	 * @summary Sees if the server has more than one user
-	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @return a boolean which indicates whether there are more than one
+	 * users on the server
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
 	 * @version 1.0 Last modified on 20/05/2023
 	 */ 
-	
 	 boolean hasMorethanOneUsers() {
 	        return this.userNumbers.size()>1;
 	    }
 	
 	/**
 	 * @summary grabs the list of usernames
-	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @return a Set of integers containing each user's respective number
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
 	 * @version 1.0 Last modified on 18/05/2023
+	 * 
 	 */ 
-
 	Set <Integer> getUserNumbers(){
 		return this.userNumbers;
 	}
 	
 	/**
 	 * @summary grabs the list of usernames
-	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
 	 * @version 2.0 Last modified on 25/05/2023
+	 * 
 	 */ 
-	
     public void communicateBetweenClients(String userInput, ClientHandler currentTarget) {
     	//loops through current users and if it's not the current user, broadcasts to the other users.
         for (ClientHandler fbiHandler : clientHandlers) {
@@ -106,28 +112,43 @@ public class Server {
 	
 	/**
 	 * @summary Add usernumber integer to userNumbers set
-	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
 	 * @version 1.0 Last modified on 18/05/2023
+	 * 
 	 */ 
-    public  void addFBIClient(Integer userID) {
+    public void addFBIClient(Integer userID) {
 		userNumbers.add(userID);
     }
+    
 	/**
 	 * @summary Deletes user from clienthandler set and from userNumber set
-	 * @author Alexandre Nguyen & Louis-Phlippe
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
 	 * @version 1.0 Last modified on 18/05/2023
+	 * 
 	 */ 
     public  void EliminateClient(Integer userID, ClientHandler clienthandler) {
-	        boolean isEliminated = userNumbers.remove(userID);
-	        if (isEliminated) {
-	        	clientHandlers.remove(clienthandler);
-	            System.out.println("The target " + userID + " has been swatted and has been forced to disconnect.");
-	        }
-}
+    	boolean isEliminated = userNumbers.remove(userID);
+	    if (isEliminated) {
+	    	clientHandlers.remove(clienthandler);
+	        System.out.println("The target " + userID + " has been swatted and has been forced to disconnect.");
+	    }
+    }
+    
+	/**
+	 * @summary Getter that retrieves the port the client is using
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
+	 * @version 1.0 Last modified on 18/05/2023
+	 * 
+	 */ 
     public int getPort(){ 
  	   return this.port; 
     } 
 
+	/**
+	 * @summary Getter that retrieves the server's IP address
+	 * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
+	 * @version 1.0 Last modified on 18/05/2023
+	 */ 
     public String getServerAddress() { 
  	   return this.serverAddress; 
     }
