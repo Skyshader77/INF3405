@@ -1,24 +1,26 @@
 /**
- * @summary The purpose of this class is to define a class which manages an the inputs from the server
- * @author Alexandre Nguyen & Louis-Phlippe
- * @version 5.0 Last modified on 25/05/2023
+ * @summary The purpose of this class is to define a class which manages the inputs from the server
+ * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
+ * @version 6 Last modified on 26/05/2023
+ * 
  */ 
 
 import java.io.*;
 import java.net.*;
 
 public class ReadThread extends Thread{
-	
-	//ATTRIBUTES
+	// ATTRIBUTES
 	private DataInputStream input;
     private Socket socket;
     private Client client;
-  //METHODS
-    
+
+    // CONSTRUCTOR
     public ReadThread(Socket socket, Client client) {
         this.socket = socket;
         this.client = client;
     }
+    
+    // METHODS
     public void run() {
 	        while (true && !socket.isClosed()) {
 	        	try {
