@@ -3,7 +3,7 @@
  * accounts for every client authentificated, as well as saves the messages
  * each user writes in the chat and displays them in the right format.
  * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
- * @version 4.0 Last modified on 25/05/2023
+ * @version 5 Last modified on 26/05/2023
  * 
  */ 
 
