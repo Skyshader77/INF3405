@@ -128,7 +128,7 @@ The role of the Server class is to create a ServerSocket object and bind it to a
 \end{itemize}
 
 \subsection{Client}
-The purpose Client class is to connect to the server via a socket as well as initiating two simultaneous threads: one to read inputs and one to write outputs. The main featuress of the Client class are:
+The purpose of the Client class is to connect to the server via a socket as well as initiating two simultaneous threads: one to read inputs and one to write outputs. The main featuress of the Client class are:
 \begin{itemize}
   \item A socket linking it to the server
   \item Starting a Readthread object which runs an input reader until the socket is closed
@@ -163,7 +163,15 @@ The PassWordAuthentificationProtocol manages the state of the interaction betwee
 %-----------------------------------------------------------------%
 \section{Difficulties Encountered}
 %-----------------------------------------------------------------%
-The team encoutered issues while trying to implement multithreading or the ability for multiple users to interact with one another in the application. The team had trouble grasping the fact that the program had to allow reading and writing to/from the console simulateneously. Online documentation and examples had to be consulted to fully understand that. In addition, the team attempted to implement the Password Authentification protocol in the Client class. This was unsuccessful for reasons still unclear to the team.  The Password Authentification protocol ended up being incorporated in the Clienthandler class as shown in the code. One more bug encountered by the team was how to print the list of 15 past messages.  The team confirmed that the Server class can correctly output the 15 lines. However, upon receiving the input from the Server, the Client class failed to print the full list of 15 messages. The team tried many attempts to solve this issue and was unsuccessful. 
+The team encoutered issues while trying to implement multithreading or the ability for multiple users to interact with one another in the application. The team had trouble grasping the fact that the program had to allow reading and writing to/from the console simulateneously. Online documentation and examples had to be consulted to fully understand that. 
+
+\medskip
+
+In addition, the team attempted to implement the Password Authentification protocol in the Client class. This was unsuccessful for reasons still unclear to the team.  The Password Authentification protocol ended up being incorporated in the Clienthandler class as shown in the code.
+
+\medskip
+
+One more bug encountered by the team was how to print the list of 15 past messages.  The team confirmed that the Server class can correctly output the 15 lines. However, upon receiving the input from the Server, the Client class failed to print the full list of 15 messages. It could only print half of the messages or all of them but concatenated in a single line. The team initially used the BufferedReader class and the println method to read inputs from the server. By changing to the DataInputStream class, the team managed to print the full list. It is not clear why using BufferedReader did not allow to print the full list.
 
 %-----------------------------------------------------------------%
 \section{Criticism and Improvements}
@@ -174,6 +182,7 @@ The following improvements could be brought to this activity:
   \item Diagrams detailing the interaction between the client, clienthandler and server class work would also have been helpful.
   \item Links to multi threading in a server (how to connect multiple users) could be provided in the future for students. That information was not readily available in the documentation provided.
    \item The mandatory rule of 3 students per team could be improved. The class saw a fair amount of students leaving the course. Perhaps the teacher or the teaching assistant may help with the pairings to cover these situations.
+ \item The availability of the teaching assistant outside of course hours could be widened. Perhaps having two teaching assistants to support the course could ease the burden on the current teaching assistant.
 \end{itemize}
 
 %-----------------------------------------------------------------%
