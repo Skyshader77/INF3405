@@ -2,7 +2,7 @@
  * @summary The purpose of this class is to authenticate the user to the server
  * and save each user's respective username and password
  * @author Alexandre Nguyen & Louis-Antoine
- * @version 4 Last modified on 26/05/2023
+ * @version 3.0 Last modified on 21/05/2023
  * 
  */ 
 
