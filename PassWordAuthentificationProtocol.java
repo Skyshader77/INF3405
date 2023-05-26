@@ -98,12 +98,11 @@ public class PassWordAuthentificationProtocol {
     /**
      * @summary The purpose of this function is to write the username/password combinations to a TXT file
      * @return a Boolean saying if the operation succeeded or not
-     * @author Alexandre Nguyen & Louis-Antoine
+     * @author Alexandre Nguyen & Louis-Antoine Martel-Marquis
      * @version 2.0 Last modified on 15/05/2023
      * 
      */ 
-    
-    public void writeToTxt() throws IOException {
+     public void writeToTxt() throws IOException {
     	BufferedWriter fbiLeak = new BufferedWriter(new FileWriter("FBI_Passwords.txt"));
     	Iterator<Map.Entry<String, String>> itr = users.entrySet().iterator();
         
