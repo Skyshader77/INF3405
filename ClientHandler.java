@@ -24,7 +24,7 @@ public class ClientHandler extends Thread{
 	
 	// CONSTRUCTOR
 	public ClientHandler(Socket socket, int clientNumber, Server server) {
-		this.socket = socket; this.clientNumber = clientNumber;this.server=server;
+		this.socket = socket; this.clientNumber = clientNumber; this.server=server;
 		System.out.println("New connection with client#" + clientNumber + " at" + socket);
 		}
 	
@@ -32,7 +32,7 @@ public class ClientHandler extends Thread{
 	public void run() {   
 		try {
 			out = new DataOutputStream(socket.getOutputStream());
-			PassWordAuthentificationProtocol Pap=new PassWordAuthentificationProtocol();
+			PassWordAuthentificationProtocol Pap = new PassWordAuthentificationProtocol();
 			DataInputStream bufferedIn= new DataInputStream(socket.getInputStream());
 			String inputLine, outputLine;
 			
@@ -48,7 +48,7 @@ public class ClientHandler extends Thread{
 		        out.writeUTF(outputLine);
 		    }
 		    
-		    username=Pap.getUser();
+		    username = Pap.getUser();
 		    
 		    printLastMessages(out); // display previous messages
 		    
@@ -58,7 +58,7 @@ public class ClientHandler extends Thread{
 		    	if (inputLine.equalsIgnoreCase("disconnect")) {
 		    		socket.close();
 		    		server.EliminateClient(clientNumber, this);
-			        String clientLeft =username + " has been swatted and was forced to disconnect.";
+			        String clientLeft = username + " has been swatted and was forced to disconnect.";
 			        server.communicateBetweenClients(clientLeft, this);
 		            break;
 		    	}
@@ -129,7 +129,7 @@ public class ClientHandler extends Thread{
         	StringBuilder printToConsole=new StringBuilder();;
         	String newLine = System.getProperty("line.separator");
         	
-        	//Reads from file
+        	// Reads from file
         	File f = new File("NSA_Spy_File.txt");
         	if (!f.exists()) {
         		BufferedWriter fbiLeak = new BufferedWriter(new FileWriter("NSA_Spy_File.txt"));
@@ -145,15 +145,15 @@ public class ClientHandler extends Thread{
             
            int sizeofDeque=messages.size();
            
-           //Removes excess messages
+           // Removes excess messages
            while (sizeofDeque > 15){
         	   		messages.removeFirst();
         	   		sizeofDeque=messages.size();
            }
            
-           //Prints to the user
+           // Prints to the user
            Iterator<String> message = messages.iterator();
-           out.writeUTF("Your last available message(s) is/are :"+newLine);
+           out.writeUTF("Your last available message(s) is/are :" + newLine);
            
            while (message.hasNext()) {
         	   String theOutput=message.next();
